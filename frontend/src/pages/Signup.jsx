@@ -1,8 +1,11 @@
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { UserPlus, ArrowLeft, Loader2 } from 'lucide-react';
+import { User, Mail, Lock, ArrowRight, Star } from 'lucide-react';
+import Card from '../components/Card';
+import Input from '../components/Input';
+import Button from '../components/Button';
+import './Signup.css';
 
 const Signup = () => {
     const [formData, setFormData] = useState({
@@ -11,9 +14,7 @@ const Signup = () => {
         password: '',
         confirmPassword: ''
     });
-    const [error, setError] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
-    const { signup } = useAuth();
+    const { signup, error } = useAuth();
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -22,111 +23,118 @@ const Signup = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setError('');
-
         if (formData.password !== formData.confirmPassword) {
-            return setError('Passwords do not match');
+            alert("Passwords don't match!");
+            return;
         }
-
-        setIsLoading(true);
-        const result = await signup(formData.username, formData.email, formData.password);
-        setIsLoading(false);
-
-        if (result.success) {
-            navigate('/login', { state: { message: 'Account created! Please log in.' } });
-        } else {
-            setError(result.message);
+        try {
+            await signup(formData.username, formData.email, formData.password);
+            navigate('/login');
+        } catch (err) {
+            console.error(err);
         }
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 to-black p-4">
+        <div className="signup-container">
+            {/* Background elements */}
+            <div className="signup-bg-overlay"></div>
+            <div className="signup-bg-gradient"></div>
 
-            <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="card w-full max-w-md glass relative overflow-hidden"
-            >
-                <Link to="/" className="absolute top-4 left-4 text-gray-400 hover:text-white transition-colors">
-                    <ArrowLeft size={24} />
-                </Link>
+            <Card className="signup-card p-0 !border-none !bg-transparent">
+                {/* Left Panel - Image Area */}
+                <div className="signup-image-section">
+                    {/* Blurry Backdrop */}
+                    <div
+                        className="signup-image-bg"
+                        style={{ backgroundImage: 'url("https://i.pinimg.com/1200x/b9/07/0d/b9070df773a679cb1aee4e06bd3bc86c.jpg")' }}
+                    ></div>
 
-                <div className="text-center mb-8 mt-4">
-                    <h2 className="text-3xl font-bold text-white mb-2">Create Profile</h2>
-                    <p className="text-gray-400">Join the world of Pocket Monsters</p>
+                    {/* Main Image */}
+                    <img
+                        src="https://i.pinimg.com/1200x/b9/07/0d/b9070df773a679cb1aee4e06bd3bc86c.jpg"
+                        alt="Sleeping Pokemon"
+                        className="signup-pokemon-img"
+                    />
+
+                    <div className="signup-badge">
+                        Join the Adventure
+                    </div>
                 </div>
 
-                {error && (
-                    <div className="bg-red-500/10 border border-red-500/50 text-red-200 p-3 rounded-lg mb-6 text-sm text-center">
-                        {error}
+                {/* Right Panel - Form Area */}
+                <div className="signup-form-section">
+                    <div className="signup-header">
+                        <div className="signup-icon-wrapper">
+                            <Star className="signup-icon" />
+                        </div>
+                        <h2 className="signup-title">Become a Trainer</h2>
+                        <p className="signup-subtitle">Start your master journey today.</p>
                     </div>
-                )}
 
-                <form onSubmit={handleSubmit}>
-                    <div className="input-group">
-                        <input
+                    {error && (
+                        <div className="signup-error">
+                            {error}
+                        </div>
+                    )}
+
+                    <form onSubmit={handleSubmit} className="signup-form">
+                        <Input
+                            icon={User}
                             type="text"
                             name="username"
                             placeholder="Trainer Name"
-                            className="input-field"
                             value={formData.username}
                             onChange={handleChange}
                             required
                         />
-                    </div>
-                    <div className="input-group">
-                        <input
+
+                        <Input
+                            icon={Mail}
                             type="email"
                             name="email"
                             placeholder="Email Address"
-                            className="input-field"
                             value={formData.email}
                             onChange={handleChange}
                             required
                         />
-                    </div>
-                    <div className="input-group">
-                        <input
+
+                        <Input
+                            icon={Lock}
                             type="password"
                             name="password"
                             placeholder="Password"
-                            className="input-field"
                             value={formData.password}
                             onChange={handleChange}
                             required
-                            minLength={6}
                         />
-                    </div>
-                    <div className="input-group">
-                        <input
+
+                        <Input
+                            icon={Lock}
                             type="password"
                             name="confirmPassword"
                             placeholder="Confirm Password"
-                            className="input-field"
                             value={formData.confirmPassword}
                             onChange={handleChange}
                             required
                         />
+
+                        <Button type="submit" className="signup-button btn-primary">
+                            Create Account <ArrowRight className="w-5 h-5 ml-2" />
+                        </Button>
+                    </form>
+
+                    <div className="signup-footer">
+                        <span className="signup-footer-text">Already have an account?</span>
+                        <Link to="/login" className="signup-link">
+                            Log In Here
+                        </Link>
                     </div>
-
-                    <button
-                        type="submit"
-                        className="btn btn-primary w-full py-3"
-                        disabled={isLoading}
-                    >
-                        {isLoading ? <Loader2 className="animate-spin" /> : <><UserPlus size={20} /> Sign Up</>}
-                    </button>
-                </form>
-
-                <div className="text-center mt-6 text-gray-400 text-sm">
-                    Already have an account?{' '}
-                    <Link to="/login" className="text-primary hover:text-red-400 font-semibold underline decoration-transparent hover:decoration-red-400 transition-all">
-                        Log In
-                    </Link>
                 </div>
-            </motion.div>
+            </Card>
         </div>
     );
 };
 
 export default Signup;
+

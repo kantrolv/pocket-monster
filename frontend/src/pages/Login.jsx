@@ -1,26 +1,16 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { useNavigate, Link, useLocation } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { LogIn, ArrowLeft, Loader2 } from 'lucide-react';
+import { useNavigate, Link } from 'react-router-dom';
+import { Mail, Lock, ArrowRight, Sun } from 'lucide-react';
+import Card from '../components/Card';
+import Input from '../components/Input';
+import Button from '../components/Button';
+import './Login.css'; // Import the new CSS file
 
 const Login = () => {
-    const [formData, setFormData] = useState({
-        email: '',
-        password: ''
-    });
-    const [error, setError] = useState('');
-    const [successMsg, setSuccessMsg] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
-    const { login } = useAuth();
+    const [formData, setFormData] = useState({ email: '', password: '' });
+    const { login, error } = useAuth();
     const navigate = useNavigate();
-    const location = useLocation();
-
-    useEffect(() => {
-        if (location.state?.message) {
-            setSuccessMsg(location.state.message);
-        }
-    }, [location.state]);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -28,90 +18,94 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setError('');
-        setIsLoading(true);
-
-        const result = await login(formData.email, formData.password);
-        setIsLoading(false);
-
-        if (result.success) {
+        try {
+            await login(formData.email, formData.password);
             navigate('/dashboard');
-        } else {
-            setError(result.message);
+        } catch (err) {
+            console.error(err);
         }
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 to-black p-4">
+        <div className="login-container">
+            {/* Background elements */}
+            <div className="login-bg-overlay"></div>
+            <div className="login-bg-gradient"></div>
 
-            <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="card w-full max-w-md glass relative overflow-hidden"
-            >
-                <Link to="/" className="absolute top-4 left-4 text-gray-400 hover:text-white transition-colors">
-                    <ArrowLeft size={24} />
-                </Link>
+            <Card className="login-card p-0 !border-none !bg-transparent">
+                {/* Left Panel - Image Area */}
+                <div className="login-image-section">
+                    {/* Blurry Backdrop */}
+                    <div
+                        className="login-image-bg"
+                        style={{ backgroundImage: 'url("https://i.pinimg.com/1200x/3e/67/30/3e6730000ea1112fe931045e885a5c56.jpg")' }}
+                    ></div>
 
-                <div className="text-center mb-8 mt-4">
-                    <h2 className="text-3xl font-bold text-white mb-2">Welcome Back</h2>
-                    <p className="text-gray-400">Continue your journey</p>
+                    {/* Main Image */}
+                    <img
+                        src="https://i.pinimg.com/1200x/3e/67/30/3e6730000ea1112fe931045e885a5c56.jpg"
+                        alt="Pokemon"
+                        className="login-pokemon-img"
+                    />
+
+                    <div className="login-badge">
+                        Trainer Portal
+                    </div>
                 </div>
 
-                {successMsg && (
-                    <div className="bg-green-500/10 border border-green-500/50 text-green-200 p-3 rounded-lg mb-6 text-sm text-center">
-                        {successMsg}
+                {/* Right Panel - Form Area */}
+                <div className="login-form-section">
+                    <div className="login-header">
+                        <div className="login-icon-wrapper">
+                            <Sun className="login-icon" />
+                        </div>
+                        <h2 className="login-title">Welcome Back</h2>
+                        <p className="login-subtitle">Your team is waiting for you.</p>
                     </div>
-                )}
 
-                {error && (
-                    <div className="bg-red-500/10 border border-red-500/50 text-red-200 p-3 rounded-lg mb-6 text-sm text-center">
-                        {error}
-                    </div>
-                )}
+                    {error && (
+                        <div className="login-error">
+                            {error}
+                        </div>
+                    )}
 
-                <form onSubmit={handleSubmit}>
-                    <div className="input-group">
-                        <input
+                    <form onSubmit={handleSubmit} className="login-form">
+                        <Input
+                            icon={Mail}
                             type="email"
                             name="email"
                             placeholder="Email Address"
-                            className="input-field"
                             value={formData.email}
                             onChange={handleChange}
                             required
                         />
-                    </div>
-                    <div className="input-group">
-                        <input
+
+                        <Input
+                            icon={Lock}
                             type="password"
                             name="password"
                             placeholder="Password"
-                            className="input-field"
                             value={formData.password}
                             onChange={handleChange}
                             required
                         />
+
+                        <Button type="submit" className="login-button btn-primary">
+                            Log In <ArrowRight className="w-5 h-5 ml-2" />
+                        </Button>
+                    </form>
+
+                    <div className="login-footer">
+                        <span className="login-footer-text">New around here?</span>
+                        <Link to="/signup" className="login-link">
+                            Create a Trainer Account
+                        </Link>
                     </div>
-
-                    <button
-                        type="submit"
-                        className="btn btn-primary w-full py-3"
-                        disabled={isLoading}
-                    >
-                        {isLoading ? <Loader2 className="animate-spin" /> : <><LogIn size={20} /> Log In</>}
-                    </button>
-                </form>
-
-                <div className="text-center mt-6 text-gray-400 text-sm">
-                    Don't have an account?{' '}
-                    <Link to="/signup" className="text-primary hover:text-red-400 font-semibold underline decoration-transparent hover:decoration-red-400 transition-all">
-                        Sign Up
-                    </Link>
                 </div>
-            </motion.div>
+            </Card>
         </div>
     );
 };
 
 export default Login;
+
