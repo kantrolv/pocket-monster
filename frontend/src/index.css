@@ -1,3 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&family=Press+Start+2P&display=swap');
+
+/* Font Face Definitions for TG Mathos */
+@font-face {
+  font-family: 'TG Mathos';
+  src: url('./assets/fonts/TGMathos-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'TG Mathos';
+  src: url('./assets/fonts/TGMathos-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   /* Light Beach Palette */
   --beach-bg: #fdfcf8;
@@ -20,7 +39,9 @@
   --radius-md: 16px;
   --radius-sm: 12px;
 
-  --font-main: 'Quicksand', 'Inter', system-ui, sans-serif;
+  /* Font Stack: TG Mathos -> Pixelify Sans -> Press Start 2P -> System */
+  --font-main: 'TG Mathos', 'Pixelify Sans', 'Press Start 2P', 'Inter', system-ui, sans-serif;
+  --font-retro: 'Press Start 2P', cursive;
 
   /* Glassmorphism System */
   --glass-bg: rgba(255, 255, 255, 0.7);

@@ -1,0 +1,258 @@
+/* LandingPage.css */
+
+.landing-container {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    color: white;
+    font-family: var(--font-main, 'Inter', sans-serif);
+    /* Charizard Background */
+    background: url('https://i.pinimg.com/1200x/6d/31/46/6d314635296b415b0037905eb0dc3473.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+
+/* Video Background - Now inside the card */
+.video-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    /* Behind text */
+    overflow: hidden;
+    border-radius: inherit;
+    /* Find parent radius */
+}
+
+/* .video-background video removed - using img */
+
+/* Video/GIF Styling */
+.video-background img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    opacity: 0.8;
+    /* Slight transparency to blend if needed */
+}
+
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    /* Darker overlay for text readability on video */
+    backdrop-filter: blur(0px);
+    /* Clear view of video */
+}
+
+/* Main Content Card */
+.content-wrapper {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 900px;
+    padding: 0 1rem;
+}
+
+.glass-card {
+    /* Glass border and shape */
+    background: rgba(0, 0, 0, 0.2);
+    /* Semi-transparent backing */
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 2.5rem;
+    padding: 3rem 2rem;
+    text-align: center;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    position: relative;
+    overflow: hidden;
+    /* Clips the video */
+    isolation: isolate;
+    /* Creates stacking context */
+}
+
+/* Responsive Padding */
+@media (min-width: 768px) {
+    .glass-card {
+        padding: 4rem;
+    }
+}
+
+/* Subtle Glow Effect inside Card */
+.glow-effect {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    pointer-events: none;
+    border-radius: 50%;
+    filter: blur(40px);
+}
+
+/* Typography */
+.landing-title {
+    font-size: 1.8rem;
+    /* Smaller for pixel font */
+    font-weight: 700;
+    margin-bottom: 2rem;
+    letter-spacing: -0.05em;
+    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    line-height: 1.1;
+    background: linear-gradient(to bottom, #ffffff, rgba(255, 255, 255, 0.8));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-family: var(--font-retro);
+    /* 8-Bit Title */
+    line-height: 1.4;
+    /* Needs more space */
+}
+
+html[data-theme="dark"] .landing-title {
+    /* Fallback for better contrast if needed */
+    color: white;
+}
+
+@media (min-width: 768px) {
+    .landing-title {
+        font-size: 3rem;
+        /* 5rem is massive for pixel font */
+    }
+}
+
+.highlight-text {
+    color: #fbbf24;
+    /* Amber-400 */
+    text-shadow: 0 0 20px rgba(251, 191, 36, 0.4);
+    /* Override background-clip for the span to show color */
+    background: none;
+    -webkit-background-clip: unset;
+    background-clip: unset;
+}
+
+.landing-subtitle {
+    font-size: 1.125rem;
+    color: #e5e7eb;
+    /* Gray-200 */
+    margin-bottom: 2.5rem;
+    font-weight: 500;
+    line-height: 1.6;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    max-width: 42rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media (min-width: 768px) {
+    .landing-subtitle {
+        font-size: 1.5rem;
+    }
+}
+
+/* Button Group */
+.button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    justify-content: center;
+    align-items: center;
+}
+
+@media (min-width: 640px) {
+    .button-group {
+        flex-direction: row;
+    }
+}
+
+/* Custom Buttons */
+.btn-landing {
+    padding: 1rem 2rem;
+    font-size: 1.125rem;
+    font-weight: 700;
+    border-radius: 1rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    width: 100%;
+    /* Mobile: fills container */
+    max-width: 300px;
+    /* Cap width for all screens */
+    height: 3.5rem;
+    /* Fixed height for consistency */
+    display: flex;
+    /* alignment */
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    line-height: 1;
+}
+
+@media (min-width: 640px) {
+    .btn-landing {
+        width: 300px;
+        /* Desktop: Fixed equal width */
+    }
+}
+
+.btn-landing-primary {
+    background-color: #fbbf24;
+    /* Amber-400 */
+    color: #1a1a1a;
+    border: none;
+    box-shadow: 0 4px 15px rgba(251, 191, 36, 0.3);
+}
+
+.btn-landing-primary:hover {
+    background-color: #f59e0b;
+    /* Amber-500 */
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 10px 25px rgba(251, 191, 36, 0.5);
+}
+
+.btn-landing-secondary {
+    background-color: #fbbf24;
+    color: #1a1a1a;
+    border: none;
+    box-shadow: 0 4px 15px rgba(251, 191, 36, 0.3);
+    backdrop-filter: blur(4px);
+}
+
+.btn-landing-secondary:hover {
+
+    background-color: #f59e0b;
+    /* Amber-500 */
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 10px 25px rgba(251, 191, 36, 0.5);
+}
+
+/* Footer */
+.landing-footer {
+    margin-top: 3rem;
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.footer-dot {
+    width: 4px;
+    height: 4px;
+    background-color: rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+}

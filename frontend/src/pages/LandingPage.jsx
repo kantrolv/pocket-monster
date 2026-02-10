@@ -1,45 +1,62 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import Button from '../components/Button';
+import './LandingPage.css'; // Import the CSS file
 
 const LandingPage = () => {
     return (
-        <div className="page-layout text-center relative overflow-hidden">
-            <div className="absolute inset-0 bg-white/30 backdrop-blur-[2px] -z-10"></div>
-            {/* Decorative Background Elements */}
-            <div className="absolute top-[10%] left-[5%] w-32 h-32 bg-yellow-200 rounded-full blur-3xl opacity-60 animate-float"></div>
-            <div className="absolute top-[20%] right-[10%] w-24 h-24 bg-blue-200 rounded-full blur-2xl opacity-50 animate-float" style={{ animationDelay: '2s' }}></div>
-
+        <div className="landing-container">
+            {/* Background Video Layer */}
+            {/* Main Content Card (Glass Box) */}
             <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-                className="z-10 max-w-2xl px-6"
+                initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+                className="content-wrapper"
             >
-                <h1 className="text-5xl md:text-7xl font-bold mb-6 text-gray-800 tracking-tight">
-                    Pocket <span className="text-[var(--beach-ocean)]">Adventure</span>
-                </h1>
-                <p className="text-xl text-gray-600 mb-10 font-medium">
-                    The sun is shining, the ocean is calling. <br /> Your journey to become a champion begins today.
-                </p>
+                <div className="glass-card">
+                    {/* 
+                        Video Background (Cozy Fireplace) 
+                        Placed INSIDE the glass card as requested.
+                    */}
+                    <div className="video-background">
+                        <img
+                            src="https://i.pinimg.com/originals/67/87/56/678756a8c5d02ef8186ab2e4a1228ce5.gif"
+                            alt="Cozy Pokemon Fireplace"
+                        />
+                        <div className="video-overlay"></div>
+                    </div>
 
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                    <Link to="/signup">
-                        <Button variant="primary" className="text-lg px-8 py-4 w-full sm:w-auto">
-                            Start Your Journey
-                        </Button>
-                    </Link>
-                    <Link to="/login">
-                        <Button variant="secondary" className="text-lg px-8 py-4 w-full sm:w-auto">
-                            Resume Adventure
-                        </Button>
-                    </Link>
+                    {/* Content on top of video */}
+                    <div style={{ position: 'relative', zIndex: 10 }}>
+                        {/* Subtle Glow Effect */}
+                        <div className="glow-effect"></div>
+
+                        <h1 className="landing-title">
+                            Pocket <span className="highlight-text">Adventure</span>
+                        </h1>
+
+                        <p className="landing-subtitle">
+                            The fire is warm, and the journey awaits. <br />
+                            Catch, train, and become the champion you were destined to be.
+                        </p>
+
+                        <div className="button-group">
+                            <Link to="/signup" className="btn-landing btn-landing-primary">
+                                Start Your Journey
+                            </Link>
+                            <Link to="/login" className="btn-landing btn-landing-secondary">
+                                Resume Adventure
+                            </Link>
+                        </div>
+
+                        <div className="landing-footer">
+                            <span>© 2024 Pocket Adventure</span>
+                            <span className="footer-dot"></span>
+                            <span>Made with ❤️ and 🔥</span>
+                        </div>
+                    </div>
                 </div>
             </motion.div>
-
-            <div className="absolute bottom-4 text-sm text-gray-400">
-                © 2024 Pocket Adventure. Made with ☀️ and 🌊
-            </div>
         </div>
     );
 };
