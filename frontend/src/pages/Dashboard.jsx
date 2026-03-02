@@ -1,10 +1,14 @@
 import { useAuth } from '../context/AuthContext';
 import { LogOut, Map, Award, User } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import Button from '../components/Button';
+import Card from '../components/Card';
+import MapPreview from '../components/MapPreview';
 
 const Dashboard = () => {
     const { user, logout } = useAuth();
+    const navigate = useNavigate();
 
     if (!user) {
         return <div className="min-h-screen flex items-center justify-center"><div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div></div>;
@@ -41,13 +45,15 @@ const Dashboard = () => {
                         </h1>
                         <p className="text-xl text-gray-600 mt-2 font-medium">Your journey continues here.</p>
                     </div>
-                    <div className="mt-6 md:mt-0">
+                    <div className="mt-6 md:mt-0 w-full md:w-auto">
                         <div className="bg-white/80 px-6 py-3 rounded-2xl flex items-center shadow-sm border border-white/50">
                             <span className="text-blue-600 font-bold mr-2">Level</span>
                             <span className="text-3xl font-black text-blue-800">1</span>
                         </div>
                     </div>
                 </Card>
+
+                <MapPreview />
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
                     {/* Stats Card */}

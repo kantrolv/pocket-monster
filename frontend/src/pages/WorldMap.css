@@ -1,0 +1,45 @@
+.map-grid {
+    display: grid;
+    /* 5x5 Grid. Making chunks 128px by 128px */
+    grid-template-columns: repeat(5, 128px);
+    grid-template-rows: repeat(5, 128px);
+    /* Optional small gap while debugging, usually 0px for a seamless map */
+    gap: 0px;
+    background-color: transparent;
+    /* Make sure the container holds the grid exact size */
+    width: calc(128px * 5);
+    height: calc(128px * 5);
+}
+
+.map-chunk {
+    width: 128px;
+    height: 128px;
+    background-size: cover;
+    background-position: center;
+    /* Subtle borders for light theme */
+    border: 1px dashed rgba(59, 130, 246, 0.1);
+}
+
+/* Custom scrollbar for the map area */
+.custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(14, 165, 233, 0.3) transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: rgba(14, 165, 233, 0.3);
+    border-radius: 20px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-corner {
+    background: transparent;
+}

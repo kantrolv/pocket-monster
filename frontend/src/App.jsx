@@ -4,6 +4,8 @@ import LandingPage from './pages/LandingPage';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
+import WorldMap from './pages/WorldMap';
+import SingleMap from './pages/SingleMap';
 
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
@@ -28,6 +30,22 @@ function App() {
             element={
               <ProtectedRoute>
                 <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/map"
+            element={
+              <ProtectedRoute>
+                <WorldMap />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/map/:id"
+            element={
+              <ProtectedRoute>
+                <SingleMap />
               </ProtectedRoute>
             }
           />
